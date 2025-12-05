@@ -1,0 +1,1547 @@
+{
+	"info": {
+		"_postman_id": "3ff82379-a0d3-4bde-8725-01fa1c12cbed",
+		"name": "Ebook Rental Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46770370",
+		"_collection_link": "https://joannakaminska-992277.postman.co/workspace/Joanna-Kaminska's-Workspace~e45eaeb3-8053-4b41-8b95-4e25f75c15e5/collection/46770370-3ff82379-a0d3-4bde-8725-01fa1c12cbed?action=share&source=collection_link&creator=46770370"
+	},
+	"item": [
+		{
+			"name": "Register New User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains user ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains new user flag\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"new\", true);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"user1234@!$%@#45PP\",\r\n  \"password\": \"newpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/user/register",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register with wrong login (already taken)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains user ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains new user flag\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"new\", false);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"user1234@!$%@#45P\",\r\n  \"password\": \"Password1234!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/user/register",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login - Valid Credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains user ID\", function () {\r",
+							"    var userId = pm.response.text();\r",
+							"    pm.expect(parseInt(userId)).to.be.a('number');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"user1234@!$%@#45P\",\r\n  \"password\": \"newpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login - Invalid Credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is -1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(-1);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"wrongUser\",\r\n  \"password\": \"wrongPassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login - Empty Credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains -1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(-1);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"\",\r\n  \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adding a New Book Title",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains new title ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.a('number');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 5108,\r\n    \"title\": \"New Book Title pp\",\r\n    \"author\": \"Some Author\",\r\n    \"year\": 2023\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adding a Book Title with Missing Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"error\");\r",
+							"    pm.expect(jsonData.error).to.eql(\"Internal Server Error\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"author\": \"Some Author\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetching Book Titles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains list of titles\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/titles/?userId=5099",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5099"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetching Book Titles Without User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"error\");\r",
+							"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Existing Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains updated title ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\", 5104);\r",
+							"    pm.expect(jsonData.title).to.eql(\"Updated Book for User 5099\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 5104,\r\n  \"title\": \"Updated Book for User 5099\",\r\n  \"author\": \"Updated Author\",\r\n  \"year\": 2024,\r\n  \"userId\": 5099\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Non-Existing Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"  pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"  var jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData.error).to.eql(\"Internal Server Error\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 9999, \r\n  \"title\": \"Nonexistent Book\",\r\n  \"author\": \"Unknown Author\",\r\n  \"year\": 2025,\r\n  \"userId\": 5099\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains true\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/titles/?userId=5099&id=5105",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5099"
+						},
+						{
+							"key": "id",
+							"value": "5105"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Non-Existing Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains false\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/titles/?userId=5099&id=5999",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5099"
+						},
+						{
+							"key": "id",
+							"value": "5999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adding a New Book Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains item ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Item ID is returned\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 5108,\r\n  \"titleId\": 5109,\r\n  \"purchaseDate\": \"2024-12-05\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/items/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"items",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetching Book Items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each item in the list should have id, purchaseDate, and status\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function(item) {\r",
+							"        pm.expect(item).to.have.property('id');\r",
+							"        pm.expect(item).to.have.property('purchaseDate');\r",
+							"        pm.expect(item).to.have.property('status');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Item status should be either AVAILABLE or RENTED\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function(item) {\r",
+							"        pm.expect(item.status).to.be.oneOf(['AVAILABLE', 'RENTED']);\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/items/?userId=5108&titleId=5109",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5108"
+						},
+						{
+							"key": "titleId",
+							"value": "5109"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetching Book Items Without User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('error');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/items/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"items",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adding a Book Item with Missing Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('error');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 5099,\r\n  \"titleId\": 5103\r\n  // brak purchaseDate\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/items/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"items",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit an existing item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains updated item\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData.purchaseDate).to.eql('2024-12-10');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Item status should be either AVAILABLE or RENTED (if provided)\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    if (jsonData.status) {\r",
+							"        pm.expect(jsonData.status).to.be.oneOf(['AVAILABLE', 'RENTED']);\r",
+							"    } else {\r",
+							"        pm.expect(jsonData.purchaseDate).to.not.be.null;\r",
+							"        console.log(\"Status not returned, assuming 'AVAILABLE' by default.\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 5110,\r\n  \"userId\": 5108,\r\n  \"purchaseDate\": \"2024-12-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/items/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"items",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit a non-existing item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('error');\r",
+							"    pm.expect(jsonData.error).to.eql('Not Found');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 9999,  // Nieistniejący ID\r\n  \"userId\": 5108,\r\n  \"purchaseDate\": \"2024-12-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/items",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an existing item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is true, indicating successful deletion\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/items/?userId=5108&id=5114",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5108"
+						},
+						{
+							"key": "id",
+							"value": "5114"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a non-existing item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('error', 'Not Found');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/items?userId=5108&id=9999",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"items"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5108"
+						},
+						{
+							"key": "id",
+							"value": "9999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of rents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains list of rents\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/rents/?userId=5108&itemId=5115",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5108"
+						},
+						{
+							"key": "itemId",
+							"value": "5115"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get rents without user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an empty array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array').that.is.empty;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/rents/?userId=9999&itemId=5115",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "9999"
+						},
+						{
+							"key": "itemId",
+							"value": "5115"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new rent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains rent ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.a('number');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 5108,\r\n  \"itemId\": 5115,\r\n  \"customerName\": \"John Doe\",\r\n  \"rentDate\": \"2024-12-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/rents/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"rents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create rent with non-existing user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('error');\r",
+							"    pm.expect(jsonData.error).to.eql('Internal Server Error');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 99999,\r\n  \"itemId\": 5115,\r\n  \"customerName\": \"Jane Doe\",\r\n  \"rentDate\": \"2025-12-05\",\r\n  \"expirationDate\": \"2025-12-12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/rents/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"rents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit existing rent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains updated rent ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id').that.is.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Customer name is updated\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.customerName).to.eql(\"John Doe Updated\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 5108,\r\n  \"id\": 5119,  \r\n  \"customerName\": \"John Doe Updated\",\r\n  \"rentDate\": \"2025-12-05\",\r\n  \"expirationDate\": \"2025-12-12\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/rents/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"rents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit non-existing rent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains error message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('error').that.contains('Internal Server Error');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 5108,\r\n  \"id\": 99999,\r\n  \"customerName\": \"Non Existent Customer\",\r\n  \"rentDate\": \"2025-12-05\",\r\n  \"expirationDate\": \"2025-12-12\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/rents/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"rents",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete existing rent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains true\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/rents/?userId=5108&id=5116",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5108"
+						},
+						{
+							"key": "id",
+							"value": "5116"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete non-existing rent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains false\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(false);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be-kodillaedu.replit.app/rents/?userId=5108&id=99999",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be-kodillaedu",
+						"replit",
+						"app"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5108"
+						},
+						{
+							"key": "id",
+							"value": "99999"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
