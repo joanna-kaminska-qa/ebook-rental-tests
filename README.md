@@ -48,6 +48,7 @@ Includes:
 - Base test architecture (`BaseTest`, `AuthenticatedBaseTest`)
 - Data preparation steps (creating book, creating copy, renting)
 - Automatic browser setup using WebDriverManager
+- Prepared test documentation: `Test Cases.pdf` and `Test Cases.xlsx`
 
 ---
 
